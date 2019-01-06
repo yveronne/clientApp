@@ -1,0 +1,56 @@
+//- 
+    To change this license header, choose License Headers in Project Properties.
+    To change this template file, choose Tools | Templates
+    and open the template in the editor.
+doctype html
+html(lang='fr')
+    head
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        meta(name='description', content='')
+        meta(name='author', content='')
+        title Cloud computing-Vote
+        // Css
+        link(href='/stylesheets/bootstrap.css', rel='stylesheet')
+        link(href='/stylesheets/index.css', rel='stylesheet')
+    body
+        .row.card.border-info.text-center.mx-auto
+            .card-header
+                h3 PROJET DE CLOUD COMPUTING
+                br
+                h4 Paramètres d'entrée 
+            .card-body
+                form.form-signin(method='post', action="/resultats")
+                    .form-group.row
+                        label.col-md-6.col-form-label(for='nbrCandidat') Nombre de candidats
+                        .col-md-6
+                            input#nbrCandidat.form-control(type='number', placeholder='Entrer un nombre', required='', autofocus='', name='nbrCandidat')
+                    .form-group.row
+                        label.col-md-6.col-form-label(for='nbrInscrit') Nombre d'inscrits
+                        .col-md-6
+                            input#nbrInscrit.form-control(type='number', placeholder='Entrer un nombre', required='',name='nbrInscrit')
+                    .form-group.row
+                        label.col-md-6.col-form-label(for='nbrBureau') Nombre de bureaux de vote
+                        .col-md-6
+                            input#nbrBureau.form-control(type='number', placeholder='Entrer un nombre', required='', name='nbrBureau')
+                    .form-group.row
+                        label.col-md-6.col-form-label(for='typeFraude') Type de fraude
+                        select#typeFraude.form-control.col-md-6(name='typeFraude')
+                            option(value='0') Aucune
+                            option(value='1') Coalition 
+                            option(value='2') Solitaire 
+                    button.btn.btn-md.btn-info(type='submit') Valider
+                    br
+                    br
+                    div.progress(style = "display : none")
+                        div.progress-bar.progress-bar-striped.progress-bar-animated(role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width : 100%")
+        // Copyright
+        // script
+        script(src='/javascripts/jquery.js')
+        script(src='/javascripts/bootstrap.js')
+        script.
+            $('form').on('submit', function(){
+                $('button').hide();
+                $('.progress').show();
+            })

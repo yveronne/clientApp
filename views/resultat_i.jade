@@ -1,0 +1,158 @@
+//- 
+    To change this license header, choose License Headers in Project Properties.
+    To change this template file, choose Tools | Templates
+    and open the template in the editor.
+
+doctype html
+html(lang='fr')
+    head
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        meta(name='description', content='')
+        meta(name='author', content='')
+        title Cloud computing-Vote
+        // Css
+        link(href='/stylesheets/bootstrap.css', rel='stylesheet')
+        link(href='/stylesheets/style.css', rel='stylesheet')
+    body
+        nav.navbar.navbar-expand-md.navbar-default.fixed-top.shadow-sm
+            a.navbar-brand(href='/resultats')
+                p
+                    img(src='/images/vote.png', height='100px', width='100px')
+            button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarCollapse', aria-controls='navbarCollapse', aria-expanded='false', aria-label='Toggle navigation')
+                span.navbar-toggler-icon
+            #navbarCollapse.collapse.navbar-collapse
+                form.form-inline.mt-2.mt-md-0.mr-auto
+                    button.btn.my-2.my-sm-0(type='submit')
+                ul.nav.navbar-nav
+                    li.nav-item.active
+                        a.nav-link(href='/resultats#firstLevel')
+                            p Premier niveau
+                    li.nav-item
+                        a.nav-link(href='/resultats#secondLevel')
+                            p Deuxième niveau
+        // About
+        section
+            .container.about
+                .row
+                    .col-md-12.big-letter.text-center
+                        p  
+                        h2.title  RESULTATS DES PROCES VERBAUX DU CANDIDAT #{id}
+                        p
+                .row
+                    .col-md-12.big-letter.text-center
+                        p  
+                        h4.petit  VAINQUEUR : CANDIDAT #{winner}
+                        p
+                .row
+                    .col-md-6.big-letter
+                        p
+                            b  Nombre de voix obtenu par chaque candidat
+                .row
+                    .col-md-12.text-center
+                        canvas#bande(width='350px', height='100px')
+                            p  erreur de chargement du graphe 
+        // Gallery
+        section
+            .container
+                .row
+                    .col-md-6.big-letter
+                        p
+                            b Pourcentages obtenus par chaque candidat
+                        br
+                .row
+                    .col-md-12.text-center
+                        canvas#camember(width='350px', height='100px')
+                            p  erreur de chargement du graphe 
+        // End Gallery
+        // Copyright
+        footer
+            .container
+                p.text-center
+                    | © 2018 - Designed by 
+                    a(href='') 5GI
+        a.cd-top(href='#page-top') Top
+        // script
+        script(src='/javascripts/jquery.js')
+        script(src='/javascripts/bootstrap.min.js')
+        script(src='/javascripts/modernizr.js')
+        script(src='/javascripts/script.js')
+        script(src='/javascripts/Chart.js')
+        script.
+            var candidates = [];
+            var backgroundColorTable = [];
+            var borderColorTable = [];
+            var max=255,min=0;
+            var nbrCandidat = #{nbrCandidat};
+            var resultats = [#{tab}]; 
+            var percentages = [#{percentages}];
+
+            for(var i=1; i<=nbrCandidat; i++){
+                candidates.push("Candidat " + i);
+            }
+            for(var i=1; i<=nbrCandidat; i++){
+                backgroundColorTable.push(
+                    'rgba('+ 
+                    (Math.floor(Math.random() * (max - min)) + min) +','+
+                    (Math.floor(Math.random() * (max - min)) + min) +','+
+                    (Math.floor(Math.random() * (max - min)) + min) +',0.2)'
+                );
+            }
+            max = 100;
+            for(var i=1; i<=nbrCandidat; i++){
+                borderColorTable.push(
+                    'rgba('+ 
+                    (Math.floor(Math.random() * (max - min)) + min) +','+
+                    (Math.floor(Math.random() * (max - min)) + min) +','+
+                    (Math.floor(Math.random() * (max - min)) + min) +',1)'
+                );
+            }
+            
+
+            var ctx = document.getElementById("camember");
+            var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+            labels: candidates,
+            datasets: [{
+            label: 'Nombre de voix',
+            data: percentages,
+            backgroundColor: backgroundColorTable,
+            borderColor: borderColorTable,
+            borderWidth: 1
+            }]
+            },
+            options: {
+            scales: {
+            yAxes: [{
+            ticks: {
+            beginAtZero:true
+            }
+            }]
+            }
+            }
+            });
+            var ctx2 = document.getElementById("bande");
+            var myChart2 = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+            labels: candidates,
+            datasets: [{
+            label: 'Nombre de voix',
+            data: resultats,
+            backgroundColor: backgroundColorTable,
+            borderColor: borderColorTable,
+            borderWidth: 1
+            }]
+            },
+            options: {
+            scales: {
+            yAxes: [{
+            ticks: {
+            beginAtZero:true
+            }
+            }]
+            }
+            }
+            });
